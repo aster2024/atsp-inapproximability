@@ -1,4 +1,4 @@
-"""Standalone exact checker for the proposed 73/72 ATSP gadget certificate.
+"""Standalone exact checker for the 73/72 ATSP module certificate.
 
 Only Python's standard library is needed.  This checks all finite gadget
 claims and rational arithmetic; the infinite reduction/decoder is proved in

@@ -1,4 +1,4 @@
-"""Step 2: decoder lemma, computed (not symbolic).
+"""Bounded check of the module decoding lemma (Lemma 6.6), computed with CP-SAT.
 
 (a) existence form: for every wheel multiplicity vector (a_C,b_C) in {0..K}^6,
     minD(a,b) >= min_q penalty(q; u=1[a>0], v=1[b>0]).

@@ -40,7 +40,8 @@ static const char *ARCS[][2] = {
   {"X","A"},{"X","Y"},{"X","Z"},{"Y","B"},{"Y","X"},{"Z","Y"},{"Z","t"},{"X","t"}};
 #define NARC 15
 #else
-/* KLS ATSP parity gadget arcs as reconstructed from the KLS text walks:
+/* Reference module with 11 vertices, reconstructed from the walks described in
+   KLS, Section 6 (not claimed to be identical to their gadget; not used in the paper):
    sj->e_i, e_i->tj, e1->x, x->e2, e2->y, y->e3, e3->z, z->e1,
    e2->e1, e1->e3, e3->e2 (auxiliary triangle, from Case x+y+z=3,2 walks) */
 #define NAUX 3

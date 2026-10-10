@@ -2,9 +2,10 @@
 
 These files check every finite statement used in the paper. They also give
 independent bounded-multiplicity checks of the local soundness lemmas, which
-the paper proves by hand for all multiplicities. The theorems do not depend on
-any of the computations. Every result the programs confirm is also proved in
-the text.
+the paper proves by hand for all multiplicities. The proofs of Theorems 1.1 and
+1.3 are given in the text; the programs check the finite module properties and
+the cost calculations used in them. Remark 8.1 is the one statement that is
+established by enumeration only (`check_small_modules.py`).
 
 The paper has two settings (Table 1 of the paper): the **weighted setting**
 (Theorem 1.1, bound 63/62; source of Chlebik and Chlebikova, cycle weight
@@ -32,20 +33,19 @@ The weighted programs scale all costs by 2, so that every cost is an integer
 | `check_half_weight_pair.py` | Lemma 6.3 for p_c = 1/2 over all 296 balanced, connected local configurations with all multiplicities <= 4 | Python 3 standard library | written for the weighted construction |
 | `check_weighted_transfer_arithmetic.py` | exact rational arithmetic of Section 7 (weighted): baseline 31 = 15 * 3/2 + 17/2, limit 63/62, explicit ratio 78750016000/77500137501 > 64/63 | Python 3 standard library | written for the weighted construction |
 | `check_weighted_small_host.py` | end-to-end test of the completeness construction of Lemma 5.1 (weighted) on a 35-vertex host: balance, coverage, forced edges and portals used, weak connectivity, exact cost 1731/50 | Python 3 standard library | written for the weighted construction |
-| `check_weighted_decoding.py` | Lemma 6.6 (module decoding) in the weighted setting for bounded multiplicities: CP-SAT minimum of 2(D_j - owed_j) over local configurations of the module with its three contacts, all multiplicities <= 2, 3, 5 | Python 3, OR-Tools | written during the independent review of the weighted proof |
+| `check_weighted_decoding.py` | Lemma 6.6 (module decoding) in the weighted setting for bounded multiplicities: CP-SAT minimum of 2(D_j - owed_j) over local configurations of the module with its three contacts, all multiplicities <= 2, 3, 5 | Python 3, OR-Tools | written separately for the weighted proof |
 | `parity_boundary.json` | the 14 module arcs of the unweighted module (Table 2), machine-readable | none | output of the SAT search |
 | `check_final.py` | unweighted module: Hamiltonian port paths for all 8 profiles (Lemma 4.1); exact minimum unit cost 9 or 10 of every honest profile (Table 4); connector walks; exact rational arithmetic of Section 7, including the limit 73/72 and the explicit ratio 91250014500/90000225001 > 75/74 | Python 3 standard library | written during the search |
 | `check_parity_ham.py` | a second enumeration of the Hamiltonian port paths of an arc set given as JSON (Lemma 4.1) | Python 3 standard library | written during the search |
 | `check_tables.py` | the following, arc by arc: Table 2 equals the JSON arc set; the Hamiltonian port paths are exactly those listed in the proof of Lemma 4.1; every walk of Table 4 and the three connector walks of Lemma 5.1 have the stated cost | Python 3 standard library | written for the paper |
-| `checker_pair.py` | Lemma 6.3 for p_c = 1 over all balanced, connected local configurations with wheel multiplicities <= 4 and forced multiplicities <= 3; the minimum cost 5 in Remark 6.4 | Python 3 standard library | independent audit |
-| `local_brute.c` | Lemma 6.6 for the unweighted module by exhaustive enumeration: module-arc multiplicities <= M, forced contact multiplicities <= F, wheel multiplicities determined by balance, every local vertex connected to the outside; checks `min_q owed <= D` | C compiler only | independent audit |
-| `check2_decoder.py` with `gadget_local.py` | Lemma 6.6 for the unweighted module once more. CP-SAT computes the exact minimum of `D` for each wheel-multiplicity vector and compares it with `min owed`. It also checks the specific decoding rule from the proof of Lemma 6.6 on all 729 feasible combinations of orientation classes and usage bits | Python 3 and Google OR-Tools (`pip install ortools`) | independent audit |
+| `checker_pair.py` | Lemma 6.3 for p_c = 1 over all balanced, connected local configurations with wheel multiplicities <= 4 and forced multiplicities <= 3; the minimum cost 5 in Remark 6.4 | Python 3 standard library | written separately |
+| `local_brute.c` | Lemma 6.6 for the unweighted module by exhaustive enumeration: module-arc multiplicities <= M, forced contact multiplicities <= F, wheel multiplicities determined by balance, every local vertex connected to the outside; checks `min_q owed <= D` | C compiler only | written separately |
+| `check2_decoder.py` with `gadget_local.py` | Lemma 6.6 for the unweighted module once more. CP-SAT computes the exact minimum of `D` for each wheel-multiplicity vector and compares it with `min owed`. It also checks the specific decoding rule from the proof of Lemma 6.6 on all 729 feasible combinations of orientation classes and usage bits | Python 3 and Google OR-Tools (`pip install ortools`) | written separately |
 | `check_small_modules.py` | Remark 8.1: no arc set with 0 or 1 auxiliary vertices has the parity property (exhaustive over 2^13 and 2^21 arc sets). Includes a positive and a negative control | Python 3 standard library | written for the paper |
 | `SHA256SUMS` | SHA-256 checksums of all other files in this directory (`sha256sum -c SHA256SUMS`) | `sha256sum` | generated |
 
-"Written during the search" and "independent audit" refer to programs that
-were written separately, from the written specification of the gadget, without
-sharing code.
+"Written separately" refers to programs that were written from the written
+specification of the module, without sharing code with the other programs.
 
 ## Commands
 
@@ -214,10 +214,11 @@ This prints two `VIOLATION ...` lines (one for F = {X} and one for
 F = {X, Y, Z}), then a summary line ending in `violations=2` and the slack
 histogram, and exits with status 1.
 
-A reference variant, compiled with `-DGADGET=0`, runs the same check on the
-11-vertex KLS module with baseline 10. Its arcs are reconstructed from the
-walks described in the text of KLS, Section 6. With `2 3` it reports
-`configs=110259438 ... violations=0`. This variant is not used in the paper.
+A reference variant, compiled with `-DGADGET=0`, runs the same check on an
+11-vertex module with baseline 10 that we reconstructed from the walks
+described in KLS, Section 6. With `2 3` it reports
+`configs=110259438 ... violations=0`. It is not claimed to be identical to the
+gadget of KLS and is not used in the paper.
 
 ### U6. Module decoding via CP-SAT (Lemma 6.6), optional: about 3.5 min
 

@@ -1,4 +1,4 @@
-"""Standalone exhaustive checker for a candidate from synth_parity_ham.py."""
+"""Standalone exhaustive checker for the Hamiltonian port paths of a module given as a JSON arc list (Lemma 4.1)."""
 
 from __future__ import annotations
 

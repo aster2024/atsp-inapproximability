@@ -1,6 +1,6 @@
-"""Independent local model of the AT1 10-vertex parity gadget.
+"""Independent local model of the 10-vertex unweighted parity module.
 
-Written from the arc table (Table 1 of the paper), independently of check_final.py
+Written from the arc table (Table 2 of the paper), independently of check_final.py
 and check_parity_ham.py.
 
 Local model: module vertices sj,tj,A,B,Xl,Xr,Yl,Yr,Zl,Zr plus one permissive hub H
@@ -22,7 +22,7 @@ import itertools
 from ortools.sat.python import cp_model
 
 CONTACTS = ("X", "Y", "Z")
-# Transcribed from Table 1 of the paper (tail -> heads)
+# Transcribed from Table 2 of the paper (tail -> heads)
 TABLE = {
     "s": ["B", "Z"],
     "A": ["B", "X", "t"],

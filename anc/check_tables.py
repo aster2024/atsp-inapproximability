@@ -25,7 +25,7 @@ from pathlib import Path
 
 CONTACTS = ("X", "Y", "Z")
 
-# Table 1 of the paper (tail -> heads).
+# Table 2 of the paper (tail -> heads).
 PAPER_ARCS = {
     "s": ("B", "Z"),
     "A": ("B", "X", "t"),
@@ -35,7 +35,7 @@ PAPER_ARCS = {
     "Z": ("Y", "t"),
 }
 
-# Table 2 of the paper: false set -> list of s->t walks (one per portal pair).
+# Table 4 of the paper: false set -> list of s->t walks (one per portal pair).
 PAPER_WALKS = {
     "": ["sBAt"],
     "X": ["sBAXAt"],

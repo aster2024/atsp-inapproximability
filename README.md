@@ -17,7 +17,7 @@ bound 75/74.
 
 The bound for ATSP stated by Karpinski, Lampis and Schmied (ISAAC 2013; J. Comput. System Sci. 2015) is 75/74. It
 is the bound listed for ATSP in the survey of Saller, Koehler and Karrenbauer
-([arXiv:2311.00604](https://arxiv.org/abs/2311.00604), Table 1).
+([arXiv:2311.00604](https://arxiv.org/abs/2311.00604)).
 
 ## How the bounds arise
 
@@ -34,8 +34,9 @@ linear equations modulo 2 built on bi-wheel amplifiers. In their reduction a mat
 
 - **Theorem 1.3** replaces the equation gadget by a module with 10 vertices and 14 arcs
   ([`anc/parity_boundary.json`](anc/parity_boundary.json)).
-- **Theorem 1.1** uses the weighted amplifiers that Chlebík and Chlebíková introduced for the symmetric problem:
-  forced edges of matched pairs get weight 1 and wheel arcs weight 1/2. The equation is simulated by a module with
+- **Theorem 1.1** uses the weighted amplifiers that Chlebík and Chlebíková introduced for the symmetric problem.
+  In the directed reduction, forced edges of matched pairs get weight 1 and wheel arcs weight 1/2. The equation is
+  simulated by a module with
   three auxiliary vertices and 18 arcs
   ([`anc/half_contact_3aux_candidate.json`](anc/half_contact_3aux_candidate.json)), whose minimum unit cost for an
   honest profile is 17/2 if the equation is satisfied and 19/2 otherwise.
@@ -45,7 +46,7 @@ linear equations modulo 2 built on bi-wheel amplifiers. In their reduction a mat
   from a true contact.
 - In the soundness analysis each violated cycle equation is charged to one of its endpoints, so that every variable
   is decoded from its own gadget. This also corrects two steps in the analysis of Karpinski, Lampis and Schmied
-  (end of the introduction and Remark 6.4 of the paper). Both concern the presentation of their argument, and the
+  (the paragraph "The soundness analysis of the two-variable part" of the introduction, and Remark 6.4). Both concern the presentation of their argument, and the
   lemma that replaces them applies verbatim to the matched pairs of their construction.
 
 ## What the theorems depend on
@@ -55,12 +56,14 @@ linear equations modulo 2 built on bi-wheel amplifiers. In their reduction a mat
   matching weight 1. The published proof of that theorem is a sketch. The paper uses the theorem as published. The
   bound 117/116 of Chlebík and Chlebíková for the symmetric problem and the bound 111/110 of Nagda, Raghavan and
   Thakurta depend on the same theorem.
-- Theorem 1.3 does not use it. It depends only on the unweighted bi-wheel amplifiers of Karpinski, Lampis and
-  Schmied, which rest on the analysis of wheel amplifiers by Berman and Karpinski, and on Håstad's theorem.
+- Theorem 1.3 does not use it. Its only external ingredient is the source theorem of Karpinski, Lampis and Schmied
+  (Theorem 2.3 of the paper), which rests on their unweighted bi-wheel amplifiers; they derive the amplification
+  property from the analysis of wheel amplifiers by Berman and Karpinski.
 - The proofs of both theorems are written out by hand for arbitrary multiplicities. The programs in `anc/` check
   the finite module properties and the arithmetic, and repeat the local soundness lemmas for bounded
-  multiplicities. Remark 8.1 (no module with at most one auxiliary vertex has the parity property) is a statement
-  proved by exhaustive enumeration.
+  multiplicities. Remark 8.1 (among modules with unit arcs, the block convention and one entry and one exit port,
+  no arc set with at most one auxiliary vertex has the parity property) is established by computer enumeration
+  only (`anc/check_small_modules.py`).
 
 ## Related work
 
@@ -69,12 +72,13 @@ linear equations modulo 2 built on bi-wheel amplifiers. In their reduction a mat
 - Karpinski, Lampis and Schmied ([arXiv:1303.6437](https://arxiv.org/abs/1303.6437)): 123/122 for the symmetric
   problem and 75/74 for ATSP.
 - Chlebík and Chlebíková (COCOON 2019; J. Comb. Optim. 2022): weighted amplifiers and 117/116 for the symmetric
-  problem. Their graphs are undirected.
+  problem. Their construction is for undirected graphs, and they do not state a bound for ATSP.
 - Nagda, Raghavan and Thakurta ([arXiv:2509.18057](https://arxiv.org/abs/2509.18057)): 111/110 for the symmetric
   problem, keeping the reduction of Chlebík and Chlebíková and replacing its equation gadget by one found with the
-  AlphaEvolve agent. Their gadget is for the undirected reduction.
+  AlphaEvolve agent. Their gadget is for the undirected reduction, and they do not state a bound for ATSP.
 
-Bounds for the symmetric problem also hold for ATSP; the ones above are smaller than 75/74.
+Bounds for the symmetric problem also hold for ATSP; all bounds for the symmetric problem listed above are smaller
+than 75/74.
 
 ## Files
 
@@ -98,7 +102,9 @@ output. The quick ones need only the Python 3 standard library and run in under 
     python3 checker_pair.py
     python3 check_parity_ham.py parity_boundary.json
 
-Three further checks need a C compiler or Google OR-Tools. `SHA256SUMS` records the distributed files.
+`python3 check_small_modules.py` (Remark 8.1) also needs only the standard library and takes a few seconds. Three
+further checks need a C compiler or Google OR-Tools. `SHA256SUMS` lists the checksums of the paper, the source, the
+programs, and the licence and README files (`sha256sum -c SHA256SUMS`).
 
 ## Licence
 
